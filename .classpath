@@ -2,5 +2,12 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="D:/NetBeansProjects/pykota/hiber/hibernate-3.1.3.jar"/>
+	<classpathentry kind="lib" path="D:/NetBeansProjects/pykota/hiber/hibernate-commons-annotations-4.0.1.Final.jar"/>
+	<classpathentry kind="lib" path="D:/NetBeansProjects/pykota/hiber/hibernate-core-3.6.10.Final.jar"/>
+	<classpathentry kind="lib" path="D:/NetBeansProjects/pykota/hiber/hibernate-entitymanager-3.6.10.Final.jar"/>
+	<classpathentry kind="lib" path="D:/NetBeansProjects/pykota/hiber/hibernate-jpa-2.0-api-1.0.1.Final.jar"/>
+	<classpathentry kind="lib" path="D:/biblioteca/Documentos/Faculdade/bibliotecas/mysql-connector-java-5.1.14-bin.jar"/>
+	<classpathentry kind="lib" path="D:/NetBeansProjects/pykota/hiber/log4j-1.2.16.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
