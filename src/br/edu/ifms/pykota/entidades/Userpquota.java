@@ -1,54 +1,55 @@
 package br.edu.ifms.pykota.entidades;
 
-/**
- * "Visual Paradigm: DO NOT MODIFY THIS FILE!"
- * 
- * This is an automatic generated file. It will be regenerated every time 
- * you generate persistence class.
- * 
- * Modifying its content may cause the program not work, or your work may lost.
- */
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-/**
- * Licensee: 
- * License Type: Evaluation
- */
 public class Userpquota {
-	public Userpquota() {
-	}
-	
 	private long id;
-	
 	private Users user;
-	
 	private Printers printer;
-	
 	private Integer lifepagecounter = new Integer(0);
-	
 	private Integer pagecounter = new Integer(0);
-	
 	private Integer softlimit;
-	
 	private Integer hardlimit;
-	
 	private java.sql.Timestamp datelimit;
-	
 	private Integer maxjobsize;
-	
 	private Integer warncount = new Integer(0);
 	
-	private java.util.Set jobhistory = new java.util.HashSet();
+	public Userpquota() {
+	}
 	
 	private void setId(long value) {
 		this.id = value;
 	}
 	
+	@Id
+	@GeneratedValue
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
 	
-	public long getORMID() {
-		return getId();
+	public void setUser(Users value) {
+		this.user = value;
+	}
+	
+	@ManyToOne(cascade = CascadeType.ALL)
+	public Users getUser() {
+		return user;
+	}
+	
+	public void setPrinter(Printers value) {
+		this.printer = value;
+	}
+	
+	@ManyToOne(cascade = CascadeType.ALL)
+	public Printers getPrinter() {
+		return printer;
 	}
 	
 	public void setLifepagecounter(int value) {
@@ -59,6 +60,7 @@ public class Userpquota {
 		this.lifepagecounter = value;
 	}
 	
+	@Column(name = "lifepagecounter")
 	public Integer getLifepagecounter() {
 		return lifepagecounter;
 	}
@@ -71,6 +73,7 @@ public class Userpquota {
 		this.pagecounter = value;
 	}
 	
+	@Column(name = "pagecounter")
 	public Integer getPagecounter() {
 		return pagecounter;
 	}
@@ -83,6 +86,7 @@ public class Userpquota {
 		this.softlimit = value;
 	}
 	
+	@Column(name = "softlimit")
 	public Integer getSoftlimit() {
 		return softlimit;
 	}
@@ -95,6 +99,7 @@ public class Userpquota {
 		this.hardlimit = value;
 	}
 	
+	@Column(name = "hardlimit")
 	public Integer getHardlimit() {
 		return hardlimit;
 	}
@@ -103,6 +108,7 @@ public class Userpquota {
 		this.datelimit = value;
 	}
 	
+	@Column(name = "datelimit")
 	public java.sql.Timestamp getDatelimit() {
 		return datelimit;
 	}
@@ -115,6 +121,7 @@ public class Userpquota {
 		this.maxjobsize = value;
 	}
 	
+	@Column(name = "maxjobsize")
 	public Integer getMaxjobsize() {
 		return maxjobsize;
 	}
@@ -127,37 +134,12 @@ public class Userpquota {
 		this.warncount = value;
 	}
 	
+	@Column(name = "warncount")
 	public Integer getWarncount() {
 		return warncount;
 	}
 	
-	public void setUser(Users value) {
-		this.user = value;
-	}
-	
-	public Users getUser() {
-		return user;
-	}
-	
-	public void setPrinter(Printers value) {
-		this.printer = value;
-	}
-	
-	public Printers getPrinter() {
-		return printer;
-	}
-	
-	public void setJobhistory(java.util.Set value) {
-		this.jobhistory = value;
-	}
-	
-	public java.util.Set getJobhistory() {
-		return jobhistory;
-	}
-	
-	
 	public String toString() {
 		return String.valueOf(getId());
 	}
-	
 }
