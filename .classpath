@@ -22,5 +22,6 @@
 	<classpathentry kind="lib" path="lib/org.osgi.core-4.3.1.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-api-1.6.2.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-log4j12-1.6.2.jar"/>
+	<classpathentry kind="lib" path="lib/orm.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

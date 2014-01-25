@@ -8,7 +8,7 @@
   <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/pykota?zeroDateTimeBehavior=convertToNull</property>
   <property name="hibernate.connection.username">root</property>
   <property name="hibernate.current_session_context_class">thread</property>
-  <property name="hibernate.show_sql">true</property>
+  <property name="hibernate.show_sql">false</property>
   <mapping class="br.edu.ifms.pykota.entidades.Grouppquota"/>
   <mapping class="br.edu.ifms.pykota.entidades.Groups"/>
   <mapping class="br.edu.ifms.pykota.entidades.Printers"/>
