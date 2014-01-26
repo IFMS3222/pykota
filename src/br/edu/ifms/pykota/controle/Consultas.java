@@ -73,7 +73,11 @@ public class Consultas
 	{
 		getSession();
 		
-		return session.createCriteria(classe).list();
+		session.beginTransaction();
+		List lista = session.createCriteria(classe).list();
+		session.getTransaction().commit();
+		
+		return lista;
 	}
 }
 
