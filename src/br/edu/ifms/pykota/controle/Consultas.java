@@ -42,19 +42,38 @@ public class Consultas
 		session.getTransaction().commit();
 	}
 	
-	public static Object Atualizar()
+	public static void Deletar(Object object)
 	{
-		return null;
+		getSession();
+		
+		session.beginTransaction();
+		session.delete(object);
+		session.getTransaction().commit();
 	}
 	
-	public static Object Inserir()
+	public static void Atualizar(Object object)
 	{
-		return null;
+		getSession();
+		
+		session.beginTransaction();
+		session.update(object);
+		session.getTransaction().commit();
 	}
 	
-	public static Object[] Listar()
+	public static void Inserir(Object object)
 	{
-		return null;
+		getSession();
+		
+		session.beginTransaction();
+		session.save(object);
+		session.getTransaction().commit();
+	}
+	
+	public static List Listar(Class classe)
+	{
+		getSession();
+		
+		return session.createCriteria(classe).list();
 	}
 }
 
