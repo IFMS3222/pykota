@@ -88,7 +88,7 @@ public class Consultas
 		return lista;
 	}
 	
-	public static List ListarComFiltro(Class classe, Criteria filtro)
+	public static List ListarComFiltro(Criteria filtro)
 	{
 		getSession();
 		
