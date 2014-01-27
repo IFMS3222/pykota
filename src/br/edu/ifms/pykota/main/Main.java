@@ -1,49 +1,66 @@
 package br.edu.ifms.pykota.main;
 
-import java.awt.Color;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import org.orm.PersistentException;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
-import br.edu.ifms.pykota.entidades.Users;
-import br.edu.ifms.pykota.front.*;
 import br.edu.ifms.pykota.controle.Cadastros;
 import br.edu.ifms.pykota.controle.Consultas;
-import br.edu.ifms.pykota.dao.ListPykotaData;
+import br.edu.ifms.pykota.entidades.Users;
+import br.edu.ifms.pykota.front.*;
 
-public class Main extends JFrame{
+public class Main extends JFrame {
 
-	public Main(){
+	public static void main(String[] args) throws Exception {
+		String menu=null;
+		//Splash.main(args);
 		
-		ver v = new ver();
+		// Consultas.Deletar(Users.class, 15); //new Main(); String menu=null;
+		do {
+			menu = JOptionPane.showInputDialog("insira um numero para Menu");
+			switch (menu) {
+			case "1":
+				Cadastros c = new Cadastros();
+				Consultas.Inserir(c.Insere_User());
+				break;
+			case "2":
+				String chama = "null";
+				do {
+					chama = JOptionPane
+							.showInputDialog("insira um numero para consulta");
+					try {
+						Users a = (Users) Consultas.Selecionar(Users.class,Integer.parseInt(chama));
+						JOptionPane.showConfirmDialog(null, a.getUsername());
+					} catch (NullPointerException npe) {
+						JOptionPane.showConfirmDialog(null,
+								"Usuario nao Encontrado");
+					}
+				} while (!chama.equals("0"));
+				break;
+			case "3":
+				List<Users> p1 = Consultas.Listar(Users.class);
+				for (Users p : p1)
+					System.out.println("Nome: " + p.getUsername() + " E-mail "
+							+ p.getEmail());
+				break;
+			case "4":
+				String nome = "1";
+				List<Users> p3 = Consultas.ListarComFiltro(Consultas.getNovoFiltro(Users.class).add(Restrictions.like("username", "1", MatchMode.ANYWHERE))
+				.addOrder(Order.asc("username")));
+
+				for (Users p : p3)
+					System.out.println("findPessoasByNome: " + p.getUsername());
+				break;
+			}
+
+		} while (!menu.equals("0"));
+
 		
-		this.setLayout(null);
-	    this.setExtendedState(MAXIMIZED_BOTH);
-	    this.setVisible(true);
-	    this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-	    this.add(v);
+
 	}
-	
-	
-	
-	public static void main(String[] args) throws PersistentException {
-		/*Cadastros cadastro = new Cadastros();
-		cadastro.Insere_User();*/
-		/*Consultas c = new Consultas();
-		c.Consulta(5);
-		System.exit(0);
-		/*Consultas c = new Consultas();
-		try{
-		c.Apaga(4);
-		}catch(NullPointerException npc){
-			JOptionPane.showMessageDialog(null, "O usuario nao Existe");
-		}*/
-		
-		
-		//Consultas.Deletar(Users.class, 8);
-		//new Main();
-	}
-
 }
