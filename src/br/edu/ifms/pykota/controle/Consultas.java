@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.Criteria;
 
 import br.edu.ifms.pykota.dao.DAOHibernateUtil;
 import br.edu.ifms.pykota.entidades.Users;
@@ -19,6 +20,13 @@ public class Consultas
 	{
 		if (session == null)
 			session = DAOHibernateUtil.getSessionFactory().getCurrentSession();
+	}
+	
+	private static Criteria getNovoFiltro(Class classe)
+	{
+		getSession();
+		
+		return session.createCriteria(classe);
 	}
 	
 	public static Object Selecionar(Class classe, Serializable id)
@@ -51,7 +59,7 @@ public class Consultas
 		session.getTransaction().commit();
 	}
 	
-	public static void Atualizar(Object object)
+	public static void Editar(Object object)
 	{
 		getSession();
 		
@@ -74,33 +82,20 @@ public class Consultas
 		getSession();
 		
 		session.beginTransaction();
-		List lista = session.createCriteria(classe).list();
+		List lista = getNovoFiltro(classe).list();
+		session.getTransaction().commit();
+		
+		return lista;
+	}
+	
+	public static List ListarComFiltro(Class classe, Criteria filtro)
+	{
+		getSession();
+		
+		session.beginTransaction();
+		List lista = filtro.list();
 		session.getTransaction().commit();
 		
 		return lista;
 	}
 }
-
-/*public class Consultas {
-	
-	public String Consulta(int id){
-		Session session = DAOHibernateUtil.getSessionFactory().getCurrentSession();
-		session.beginTransaction();
-		Users user = (Users) session.get(Users.class, id);
-		String volta = user.getUsername();
-		session.getTransaction().commit();
-		
-		return volta;
-	}
-	public void Apaga(int id){ 
-		Session session = DAOHibernateUtil.getSessionFactory().getCurrentSession();
-		
-		session.beginTransaction();
-		Users user = (Users) session.get(Users.class, new Integer(id));
-		String usuario = user.getUsername();
-		session.delete(user);
-		session.getTransaction().commit();
-		JOptionPane.showMessageDialog(null, "O usuario "+usuario+" foi excluido com sucesso");
-		 
-	}
-}*/
