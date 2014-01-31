@@ -19,11 +19,11 @@ import org.hibernate.criterion.Restrictions;
 import br.edu.ifms.pykota.controle.Cadastros;
 import br.edu.ifms.pykota.controle.Consultas;
 import br.edu.ifms.pykota.entidades.Users;
+import br.edu.ifms.pykota.utilitarios.AntiInjection;
 
 @SuppressWarnings("serial")
 public class Tabela extends JTable 
-{
-	
+{	
 	public Tabela(String[] nom_col,int[] lar_col)
 	{
 		this.setModel(new DefaultTableModel(nom_col,0));
@@ -31,6 +31,7 @@ public class Tabela extends JTable
 		this.setAutoCreateRowSorter(true);
 		this.setRowHeight(20);
 		this.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		this.setBackground(Color.decode("#DDDDDD"));
 		
 		this.Buscar("");
 		
@@ -73,8 +74,10 @@ public class Tabela extends JTable
 	public void Buscar(String busca)
 	{	
 		this.RemoverTudo();
-		//LOOP COM OS DADOS DO BANCO
 		
+		busca = AntiInjection.Verificar(busca);
+		
+		//LOOP COM OS DADOS DO BANCO
 		@SuppressWarnings("unchecked")
 		List<Users> users = Consultas.ListarComFiltro(Consultas.getNovoFiltro(Users.class).add(Restrictions.like("username", busca, MatchMode.ANYWHERE)).addOrder(Order.asc("username")));
 		

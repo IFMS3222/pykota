@@ -1,6 +1,5 @@
 package br.edu.ifms.pykota.itens.usuarios;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,14 +12,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
-
-import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import br.edu.ifms.pykota.controle.Consultas;
 import br.edu.ifms.pykota.entidades.Users;
+import br.edu.ifms.pykota.utilitarios.AntiInjection;
 import br.edu.ifms.pykota.utilitarios.Icone;
 
 @SuppressWarnings("serial")
@@ -101,7 +97,7 @@ class Form extends JPanel
 	public void Botoes()
 	{
 		//ADICIONA O BOTAO EDITAR
-		this.bt_editar = new Botao("Editar","edit_user.png");
+		this.bt_editar = new Botao("Editar","edit_user.png",50);
 		this.bt_editar.setBounds(340,40,120,100);
 		this.bt_editar.setFont(this.font_bd);
 		this.bt_editar.setHorizontalTextPosition(JButton.CENTER);
@@ -115,13 +111,79 @@ class Form extends JPanel
 					username.setEditable(true);
 					email.setEditable(true);
 					description.setEditable(true);
+					remove(bt_editar);
+					add(bt_salvar);
+					repaint();
 				}
 			}
 		});
 		this.add(this.bt_editar);
+		
+		
+		//ADICIONA O BOTAO SALVAR
+		this.bt_salvar = new Botao("Salvar","save.png",50);
+		this.bt_salvar.setBounds(340,40,120,100);
+		this.bt_salvar.setFont(this.font_bd);
+		this.bt_salvar.setHorizontalTextPosition(JButton.CENTER);
+		this.bt_salvar.setVerticalTextPosition(JButton.BOTTOM);
+		this.bt_salvar.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				if(user != null)
+				{
+					user.setUsername(AntiInjection.Verificar(username.getText()));
+					user.setEmail(AntiInjection.Verificar(email.getText()));
+					user.setDescription(AntiInjection.Verificar(description.getText()));
+					
+					Consultas.Editar(user);
+					
+					JOptionPane.showMessageDialog(null,"O USUÁRIO FOI ALTERADO COM SUCESSO!!!","SUCESSO",JOptionPane.INFORMATION_MESSAGE);
+					
+					remove(bt_salvar);
+					add(bt_editar);
+					repaint();
+					username.setEditable(false);
+					email.setEditable(false);
+					description.setEditable(false);
+				}
+			}
+		});
+		
+		//ADICIONA O BOTAO DELETAR
+		this.bt_deletar = new Botao("Deletar","delete_user.png",25);
+		this.bt_deletar.setBounds(340,145,120,30);
+		this.bt_deletar.setFont(this.font_bd);
+		this.bt_deletar.setHorizontalTextPosition(JButton.RIGHT);
+		this.bt_deletar.setVerticalTextPosition(JButton.CENTER);
+		this.bt_deletar.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				if(user != null)
+				{
+					int option = JOptionPane.showConfirmDialog(null,"DESEJA REALMENTE DELETAR O USUÁRIO?","SERÁ QUE É ISSO MESMO?",JOptionPane.WARNING_MESSAGE);
+					if(option == 0)
+					{
+						Consultas.Deletar(user);
+						user = null;
+					
+						JOptionPane.showMessageDialog(null,"O USUÁRIO FOI DELETADO COM SUCESSO!!!","SUCESSO",JOptionPane.INFORMATION_MESSAGE);
+						
+						remove(bt_salvar);
+						add(bt_editar);
+						repaint();
+						username.setEditable(false);
+						email.setEditable(false);
+						description.setEditable(false);
+					}
+				}
+			}
+		});
+		this.add(this.bt_deletar);
 	}
 	
-	
+	//METODO CHAMADO PELA TABELA QUE PEENCHE OS CAMPOS DO FORMULARIO
 	public void SetarDados(int id)
 	{
 		@SuppressWarnings("unchecked")
@@ -133,6 +195,10 @@ class Form extends JPanel
 		username.setEditable(false);
 		email.setEditable(false);
 		description.setEditable(false);
+		
+		this.remove(this.bt_salvar);
+		this.add(this.bt_editar);
+		this.repaint();
 	}
 }
 
@@ -140,10 +206,10 @@ class Form extends JPanel
 @SuppressWarnings("serial")
 class Botao extends JButton
 {
-	public Botao(String texto,String URL_icon)
+	public Botao(String texto,String URL_icon,int tam)
 	{
 		super(texto);
-		this.setIcon(new Icone("edit_user.png"));
-		this.setSelected(false);
+		this.setIcon(new Icone(URL_icon,tam));
+		
 	}
 }
