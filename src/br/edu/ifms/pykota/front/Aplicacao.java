@@ -6,6 +6,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
 import br.edu.ifms.pykota.utilitarios.Icone;
 
 @SuppressWarnings("serial")
@@ -17,6 +20,14 @@ public class Aplicacao extends JPanel
 	
 	public Aplicacao()
 	{
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException
+				| IllegalAccessException | UnsupportedLookAndFeelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		//SETA O LAYOUT DA APLICACAO
 		this.layout = new SpringLayout();
 		this.setLayout(layout);

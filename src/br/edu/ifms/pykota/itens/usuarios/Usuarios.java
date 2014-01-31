@@ -11,6 +11,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import br.edu.ifms.pykota.entidades.Users;
 import br.edu.ifms.pykota.utilitarios.Dialog;
 
 @SuppressWarnings("serial")
@@ -20,8 +21,9 @@ public class Usuarios extends Dialog
 	private JPanel rightPanel;
 	private JTextField busca;
 	private JScrollPane scroll;
-	private Tabela tabela ;
+	public static Tabela tabela ;
 	private Form form;
+	private Abas abas;
 	
 	
 	public Usuarios()
@@ -38,9 +40,9 @@ public class Usuarios extends Dialog
 		
 		this.busca = new JTextField();//CAIXA DE TEXTO DO INSTANT 
 		this.scroll = new JScrollPane();//SCROLL
-		this.tabela = new Tabela(new String[]{"Usuários","id"},new int[]{268,0}); //TABELA COM OS USUARIOS
+		this.tabela = new Tabela(new String[]{"Usuários"},new int[]{268}); //TABELA COM OS USUARIOS
 		this.form = new Form(); //FORMULARIO
-		
+		this.abas = new Abas(); //BARRAS
 		
 		this.busca.setBounds(10,20,270,25);
 		this.busca.addKeyListener(new KeyListener()
@@ -61,8 +63,8 @@ public class Usuarios extends Dialog
 		{
 			public void mouseClicked(MouseEvent c)
 			{
-				String id = (String) ((DefaultTableModel)tabela.getModel()).getValueAt(tabela.getSelectedRow(), 1);
-				form.SetarDados(Integer.parseInt(id));
+				Users user = (Users) ((DefaultTableModel)tabela.getModel()).getValueAt(tabela.getSelectedRow(), 0);
+				form.SetarDados(user);
 			}
 			public void mouseEntered(MouseEvent c){}
 			public void mouseExited(MouseEvent c){}
@@ -87,6 +89,7 @@ public class Usuarios extends Dialog
 		this.rightPanel.setLayout(null);
 		this.rightPanel.setBorder(BorderFactory.createTitledBorder("INFORMAÇÕES"));
 		this.rightPanel.add(this.form);
+		this.rightPanel.add(this.abas);
 		this.add(this.rightPanel);
 	}	
 }

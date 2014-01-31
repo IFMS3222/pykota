@@ -10,6 +10,7 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.MatchMode;
@@ -21,9 +22,24 @@ import br.edu.ifms.pykota.controle.Consultas;
 import br.edu.ifms.pykota.entidades.Users;
 import br.edu.ifms.pykota.utilitarios.AntiInjection;
 
+class UserCellRenderer extends DefaultTableCellRenderer
+{
+	public UserCellRenderer()
+	{
+		super();
+		this.setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
+	}
+
+    public void setValue(Object value) {
+        setText((value == null) ? "" : ((Users) value).getUsername());
+    }
+}
+
 @SuppressWarnings("serial")
 public class Tabela extends JTable 
 {	
+	private UserCellRenderer userCellRenderer = new UserCellRenderer();
+	
 	public Tabela(String[] nom_col,int[] lar_col)
 	{
 		this.setModel(new DefaultTableModel(nom_col,0));
@@ -55,6 +71,9 @@ public class Tabela extends JTable
 		}
 	}
 	
+	public TableCellRenderer getCellRenderer(int row, int column) {
+            return userCellRenderer;
+    }
 	
 	public void RemoverTudo()
 	{
@@ -71,6 +90,11 @@ public class Tabela extends JTable
 		}
 	}
 	
+	public void RemoverLinha()
+	{
+		((DefaultTableModel)this.getModel()).removeRow(this.getSelectedRow());
+	}
+	
 	public void Buscar(String busca)
 	{	
 		this.RemoverTudo();
@@ -83,7 +107,7 @@ public class Tabela extends JTable
 		
 		for (Users us : users)
 		{
-			((DefaultTableModel)this.getModel()).addRow(new String[]{us.getUsername(),us.getId().toString()});
+			((DefaultTableModel)this.getModel()).addRow(new Users[]{us});
 		}
 	}
 	

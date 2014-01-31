@@ -27,6 +27,7 @@ class Form extends JPanel
 	private JTextField email;
 	private JTextArea description; 
 	
+	private Botao bt_add;
 	private Botao bt_salvar;
 	private Botao bt_editar;
 	private Botao bt_deletar;
@@ -96,12 +97,37 @@ class Form extends JPanel
 		
 	public void Botoes()
 	{
+		//ADICIONA O BOTAO ADICIONAR
+		this.bt_add = new Botao("Novo","add_user.png",30);
+		this.bt_add.setBounds(340,45,120,40);
+		this.bt_add.setFont(this.font_bd);
+		this.bt_add.setHorizontalTextPosition(JButton.RIGHT);
+		this.bt_add.setVerticalTextPosition(JButton.CENTER);
+		this.bt_add.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				remove(bt_salvar);
+				add(bt_editar);
+				repaint();
+				username.setText("");
+				email.setText("");
+				description.setText("");
+				username.setEditable(false);
+				email.setEditable(false);
+				description.setEditable(false);
+			}
+		});
+		this.add(this.bt_add);
+		
+		
+		
 		//ADICIONA O BOTAO EDITAR
-		this.bt_editar = new Botao("Editar","edit_user.png",50);
-		this.bt_editar.setBounds(340,40,120,100);
+		this.bt_editar = new Botao("Editar","edit_user.png",30);
+		this.bt_editar.setBounds(340,95,120,40);
 		this.bt_editar.setFont(this.font_bd);
-		this.bt_editar.setHorizontalTextPosition(JButton.CENTER);
-		this.bt_editar.setVerticalTextPosition(JButton.BOTTOM);
+		this.bt_editar.setHorizontalTextPosition(JButton.RIGHT);
+		this.bt_editar.setVerticalTextPosition(JButton.CENTER);
 		this.bt_editar.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e) 
@@ -121,11 +147,11 @@ class Form extends JPanel
 		
 		
 		//ADICIONA O BOTAO SALVAR
-		this.bt_salvar = new Botao("Salvar","save.png",50);
-		this.bt_salvar.setBounds(340,40,120,100);
+		this.bt_salvar = new Botao("Salvar","save.png",30);
+		this.bt_salvar.setBounds(340,95,120,40);
 		this.bt_salvar.setFont(this.font_bd);
-		this.bt_salvar.setHorizontalTextPosition(JButton.CENTER);
-		this.bt_salvar.setVerticalTextPosition(JButton.BOTTOM);
+		this.bt_salvar.setHorizontalTextPosition(JButton.RIGHT);
+		this.bt_salvar.setVerticalTextPosition(JButton.CENTER);
 		this.bt_salvar.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e) 
@@ -151,8 +177,8 @@ class Form extends JPanel
 		});
 		
 		//ADICIONA O BOTAO DELETAR
-		this.bt_deletar = new Botao("Deletar","delete_user.png",25);
-		this.bt_deletar.setBounds(340,145,120,30);
+		this.bt_deletar = new Botao("Deletar","delete_user.png",30);
+		this.bt_deletar.setBounds(340,145,120,40);
 		this.bt_deletar.setFont(this.font_bd);
 		this.bt_deletar.setHorizontalTextPosition(JButton.RIGHT);
 		this.bt_deletar.setVerticalTextPosition(JButton.CENTER);
@@ -173,9 +199,14 @@ class Form extends JPanel
 						remove(bt_salvar);
 						add(bt_editar);
 						repaint();
+						username.setText("");
+						email.setText("");
+						description.setText("");
 						username.setEditable(false);
 						email.setEditable(false);
 						description.setEditable(false);
+						
+						Usuarios.tabela.RemoverLinha();
 					}
 				}
 			}
@@ -184,11 +215,9 @@ class Form extends JPanel
 	}
 	
 	//METODO CHAMADO PELA TABELA QUE PEENCHE OS CAMPOS DO FORMULARIO
-	public void SetarDados(int id)
+	public void SetarDados(Users user)
 	{
-		@SuppressWarnings("unchecked")
-		List<Users> user = Consultas.ListarComFiltro(Consultas.getNovoFiltro(Users.class).add(Restrictions.idEq(id)));
-		this.user = user.get(0);
+		this.user = user;
 		this.username.setText(this.user.getUsername());
 		this.email.setText(this.user.getEmail());
 		this.description.setText(this.user.getDescription());
