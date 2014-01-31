@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingWorker;
 import br.edu.ifms.pykota.dao.DAOHibernateUtil;
+import br.edu.ifms.pykota.utilitarios.Icone;
 
 public class Splash extends SwingWorker<Void, Integer> {
 	private static JFrame tela = new JFrame();
@@ -21,6 +22,7 @@ public class Splash extends SwingWorker<Void, Integer> {
 		tela.setSize(700, 500);
 		tela.setLocationRelativeTo(null);
 		tela.setUndecorated(true);
+		tela.setIconImage(new Icone("impressoras.png").getImage());
 
 		lblNewLabel.setIcon(new ImageIcon(Splash.class
 				.getResource("/br/edu/ifms/pykota/img/PykotaV.png")));
@@ -51,11 +53,11 @@ public class Splash extends SwingWorker<Void, Integer> {
 	protected Void doInBackground() throws Exception {
 		texto.setText("Conectando aplicação...");
 		DAOHibernateUtil.getSessionFactory();
-		Thread.sleep(1500);
+		Thread.sleep(500);
 		texto.setText(" Conectado com sucesso.");
-		Thread.sleep(1500);
+		Thread.sleep(500);
 		texto.setText("   Abrindo Aplicação...");
-		Thread.sleep(2000);
+		Thread.sleep(1000);
 		tela.dispose();
 		Aplicacao a = new Aplicacao();
 		a.Show();

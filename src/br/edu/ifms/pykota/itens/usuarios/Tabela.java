@@ -1,8 +1,11 @@
 package br.edu.ifms.pykota.itens.usuarios;
 
 import java.awt.Color;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -77,7 +80,7 @@ public class Tabela extends JTable
 		
 		for (Users us : users)
 		{
-			((DefaultTableModel)this.getModel()).addRow(new String[]{us.getUsername()});
+			((DefaultTableModel)this.getModel()).addRow(new String[]{us.getUsername(),us.getId().toString()});
 		}
 	}
 	
@@ -85,4 +88,5 @@ public class Tabela extends JTable
 	{
 		return false;
 	}
+	
 }
