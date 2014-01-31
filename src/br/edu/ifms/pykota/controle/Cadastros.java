@@ -2,17 +2,6 @@ package br.edu.ifms.pykota.controle;
 
 import java.util.Random;
 
-import javax.swing.JOptionPane;
-import javax.transaction.HeuristicMixedException;
-import javax.transaction.HeuristicRollbackException;
-import javax.transaction.RollbackException;
-import javax.transaction.SystemException;
-import javax.transaction.Transaction;
-
-import org.hibernate.*;
-
-
-import br.edu.ifms.pykota.dao.DAOHibernateUtil;
 import br.edu.ifms.pykota.entidades.Users;;
 
 public class Cadastros {

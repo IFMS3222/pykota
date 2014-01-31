@@ -1,11 +1,21 @@
 package br.edu.ifms.pykota.itens.usuarios;
 
 import java.awt.Color;
+import java.util.List;
 
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+
+import org.hibernate.Criteria;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
+
+import br.edu.ifms.pykota.controle.Cadastros;
+import br.edu.ifms.pykota.controle.Consultas;
+import br.edu.ifms.pykota.entidades.Users;
 
 @SuppressWarnings("serial")
 public class Tabela extends JTable 
@@ -18,6 +28,8 @@ public class Tabela extends JTable
 		this.setAutoCreateRowSorter(true);
 		this.setRowHeight(20);
 		this.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		
+		this.Buscar("");
 		
 		DefaultTableCellRenderer centro = new DefaultTableCellRenderer();
 		centro.setHorizontalAlignment(SwingConstants.CENTER);
@@ -59,7 +71,14 @@ public class Tabela extends JTable
 	{	
 		this.RemoverTudo();
 		//LOOP COM OS DADOS DO BANCO
-		((DefaultTableModel)this.getModel()).addRow(new String[]{busca});
+		
+		@SuppressWarnings("unchecked")
+		List<Users> users = Consultas.ListarComFiltro(Consultas.getNovoFiltro(Users.class).add(Restrictions.like("username", busca, MatchMode.ANYWHERE)).addOrder(Order.asc("username")));
+		
+		for (Users us : users)
+		{
+			((DefaultTableModel)this.getModel()).addRow(new String[]{us.getUsername()});
+		}
 	}
 	
 	public boolean isCellEditable(int Rows,int Colss)

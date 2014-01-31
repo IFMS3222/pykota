@@ -3,15 +3,10 @@ package br.edu.ifms.pykota.controle;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.Query;
-import javax.swing.JOptionPane;
-
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Criteria;
 
 import br.edu.ifms.pykota.dao.DAOHibernateUtil;
-import br.edu.ifms.pykota.entidades.Users;
 
 public class Consultas {
 	private static Session session;

@@ -57,7 +57,8 @@ public class Splash extends SwingWorker<Void, Integer> {
 		texto.setText("   Abrindo Aplicação...");
 		Thread.sleep(2000);
 		tela.dispose();
-		Principal p = new Principal();
+		Aplicacao a = new Aplicacao();
+		a.Show();
 		return null;
 	}
 

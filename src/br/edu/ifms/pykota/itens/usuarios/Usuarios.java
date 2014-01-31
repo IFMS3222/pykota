@@ -36,19 +36,21 @@ public class Usuarios extends Dialog
 		this.scroll = new JScrollPane();//SCROLL
 		this.tabela = new Tabela(new String[]{"Usuários"},new int[]{268}); //TABELA COM OS USUARIOS
 		
+		
 		this.busca.setBounds(10,20,270,25);
 		this.busca.addKeyListener(new KeyListener()
 		{
-			public void keyPressed(KeyEvent e) 
+			public void keyPressed(KeyEvent arg0){}
+			public void keyReleased(KeyEvent e) 
 			{	
 				if(e.getKeyChar() != ' ')
 				{
 					tabela.Buscar(busca.getText());
 				}
 			}
-			public void keyReleased(KeyEvent arg0){}
 			public void keyTyped(KeyEvent arg0){}
 		});
+		
 		
 		this.scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		this.scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -65,6 +67,7 @@ public class Usuarios extends Dialog
 		this.rightPanel.setBounds(300,5,490,560);
 		this.rightPanel.setLayout(null);
 		this.rightPanel.setBorder(BorderFactory.createTitledBorder("INFORMAÇÕES"));
+		this.rightPanel.add(new Form());
 		this.add(this.rightPanel);
 	}	
 }

@@ -18,9 +18,11 @@ public class Main extends JFrame {
 
 	public static void main(String[] args) throws Exception {
 		String menu=null;
-		//Splash.main(args);
 		
-		// Consultas.Deletar(Users.class, 15); //new Main(); String menu=null;
+		Splash.main(args);
+		
+		/*
+		//Consultas.Deletar(Users.class, 15); //new Main(); String menu=null;
 		do {
 			menu = JOptionPane.showInputDialog("insira um numero para Menu");
 			switch (menu) {
@@ -60,7 +62,7 @@ public class Main extends JFrame {
 
 		} while (!menu.equals("0"));
 
-		
+		*/
 
 	}
 }
