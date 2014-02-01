@@ -12,7 +12,7 @@ import br.edu.ifms.pykota.dao.DAOHibernateUtil;
 import br.edu.ifms.pykota.utilitarios.Icone;
 
 public class Splash extends SwingWorker<Void, Integer> {
-	private static JFrame tela = new JFrame();
+	private JFrame tela = new JFrame();
 	private static JLabel texto = new JLabel();
 	private static JProgressBar progresso = new JProgressBar();
 	private static JLabel lblNewLabel = new JLabel("");
@@ -57,10 +57,11 @@ public class Splash extends SwingWorker<Void, Integer> {
 		texto.setText(" Conectado com sucesso.");
 		Thread.sleep(500);
 		texto.setText("   Abrindo Aplicação...");
-		Thread.sleep(1000);
-		tela.dispose();
 		Aplicacao a = new Aplicacao();
+		progresso.setVisible(false);
+		Thread.sleep(1000);
 		a.Show();
+		tela.dispose();
 		return null;
 	}
 
