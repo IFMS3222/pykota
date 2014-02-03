@@ -1,4 +1,4 @@
-package br.edu.ifms.pykota.itens.usuarios;
+package br.edu.ifms.pykota.itens.grupos;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -11,11 +11,11 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import br.edu.ifms.pykota.entidades.Users;
+import br.edu.ifms.pykota.entidades.Groups;
 import br.edu.ifms.pykota.utilitarios.Dialog;
 
 @SuppressWarnings("serial")
-public class Usuarios extends Dialog
+public class Grupos extends Dialog
 {
 	private JPanel leftPanel;
 	private JPanel rightPanel;
@@ -26,9 +26,9 @@ public class Usuarios extends Dialog
 	private Abas abas;
 	
 	
-	public Usuarios()
+	public Grupos()
 	{
-		super(Dialog.USUARIOS);
+		super(Dialog.GRUPOS);
 		this.setLayout(null);
 		this.Componentes();
 	}
@@ -63,8 +63,8 @@ public class Usuarios extends Dialog
 		{
 			public void mouseClicked(MouseEvent c)
 			{
-				Users user = (Users) ((DefaultTableModel)tabela.getModel()).getValueAt(tabela.getSelectedRow(), 0);
-				form.SetarDados(user);
+				Groups group = (Groups) ((DefaultTableModel)tabela.getModel()).getValueAt(tabela.getSelectedRow(), 0);
+				form.SetarDados(group);
 				//abas.cotas.Buscar();
 			}
 			public void mouseEntered(MouseEvent c){}

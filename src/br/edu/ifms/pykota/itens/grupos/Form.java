@@ -1,4 +1,4 @@
-package br.edu.ifms.pykota.itens.usuarios;
+package br.edu.ifms.pykota.itens.grupos;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -13,7 +13,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import br.edu.ifms.pykota.controle.Consultas;
-import br.edu.ifms.pykota.entidades.Users;
+import br.edu.ifms.pykota.entidades.Groups;
 import br.edu.ifms.pykota.utilitarios.AntiInjection;
 import br.edu.ifms.pykota.utilitarios.Icone;
 
@@ -21,8 +21,7 @@ import br.edu.ifms.pykota.utilitarios.Icone;
 class Form extends JPanel
 {
 	
-	private JTextField username;
-	private JTextField email;
+	private JTextField groupname;
 	private JTextArea description; 
 	
 	private Botao bt_add;
@@ -33,7 +32,7 @@ class Form extends JPanel
 	private Font font_bd = new Font("Arial",Font.PLAIN,15);
 	private Font font = new Font("Arial",Font.PLAIN,13);
 	
-	public static Users user;
+	public static Groups group;
 	
 	public Form()
 	{
@@ -46,48 +45,35 @@ class Form extends JPanel
 	
 	public void Labels()
 	{	
-		//ADICIONA O CAMPO USAENAME
-		JLabel lb_username = new JLabel("Nome:");
-		lb_username.setBounds(20,40,80,25);
-		lb_username.setFont(this.font_bd);
-		this.add(lb_username);
+		//ADICIONA O CAMPO GROUPNAME
+		JLabel lb_groupname = new JLabel("Nome:");
+		lb_groupname.setBounds(20,50,80,25);
+		lb_groupname.setFont(this.font_bd);
+		this.add(lb_groupname);
 		
-		this.username = new JTextField();
-		this.username.setBounds(100,40,200,25);
-		this.username.setFont(this.font);
-		username.setEditable(false);
-		this.add(this.username);
-		
-		
-		//ADICIONA O CAMPO EMAIL
-		JLabel lb_email = new JLabel("Email:");
-		lb_email.setBounds(20,80,80,25);
-		lb_email.setFont(this.font_bd);
-		this.add(lb_email);
-		
-		this.email = new JTextField();
-		this.email.setBounds(100,80,200,25);
-		this.email.setFont(this.font);
-		email.setEditable(false);
-		this.add(this.email);
+		this.groupname = new JTextField();
+		this.groupname.setBounds(100,50,200,25);
+		this.groupname.setFont(this.font);
+		this.groupname.setEditable(false);
+		this.add(this.groupname);
 		
 		
 		//ADICIONA O CAMPO DESCRIPTION
 		JLabel lb_description = new JLabel("Descrição:");
-		lb_description.setBounds(20,120,80,25);
+		lb_description.setBounds(20,100,80,25);
 		lb_description.setFont(this.font_bd);
 		this.add(lb_description);
 		
 		this.description = new JTextArea();
 		this.description.setFont(this.font);
 		this.description.setWrapStyleWord(true);
-		description.setEditable(false);
+		this.description.setEditable(false);
 		this.description.setLineWrap(true);
 		
 		JScrollPane scroll = new JScrollPane();
 		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		scroll.setBounds(100,120,200,100);
+		scroll.setBounds(100,100,200,100);
 		scroll.setViewportView(this.description);
 		this.add(scroll);
 		
@@ -108,11 +94,9 @@ class Form extends JPanel
 				remove(bt_salvar);
 				add(bt_editar);
 				repaint();
-				username.setText("");
-				email.setText("");
+				groupname.setText("");
 				description.setText("");
-				username.setEditable(false);
-				email.setEditable(false);
+				groupname.setEditable(false);
 				description.setEditable(false);
 				
 				Novo novo = new Novo();
@@ -133,10 +117,9 @@ class Form extends JPanel
 		{
 			public void actionPerformed(ActionEvent e) 
 			{
-				if(user != null)
+				if(group != null)
 				{
-					username.setEditable(true);
-					email.setEditable(true);
+					groupname.setEditable(true);
 					description.setEditable(true);
 					remove(bt_editar);
 					add(bt_salvar);
@@ -157,21 +140,19 @@ class Form extends JPanel
 		{
 			public void actionPerformed(ActionEvent e) 
 			{
-				if(user != null)
+				if(group != null)
 				{
-					user.setUsername(AntiInjection.Verificar(username.getText()));
-					user.setEmail(AntiInjection.Verificar(email.getText()));
-					user.setDescription(AntiInjection.Verificar(description.getText()));
+					group.setGroupname(AntiInjection.Verificar(groupname.getText()));
+					group.setDescription(AntiInjection.Verificar(description.getText()));
 					
-					Consultas.Editar(user);
+					Consultas.Editar(group);
 					
-					JOptionPane.showMessageDialog(null,"O USUÁRIO FOI ALTERADO COM SUCESSO!!!","SUCESSO",JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null,"O GRUPO FOI ALTERADO COM SUCESSO!!!","SUCESSO",JOptionPane.INFORMATION_MESSAGE);
 					
 					remove(bt_salvar);
 					add(bt_editar);
 					repaint();
-					username.setEditable(false);
-					email.setEditable(false);
+					groupname.setEditable(false);
 					description.setEditable(false);
 				}
 			}
@@ -187,27 +168,25 @@ class Form extends JPanel
 		{
 			public void actionPerformed(ActionEvent e) 
 			{
-				if(user != null)
+				if(group != null)
 				{
-					int option = JOptionPane.showConfirmDialog(null,"DESEJA REALMENTE DELETAR O USUÁRIO?","SERÁ QUE É ISSO MESMO?",JOptionPane.WARNING_MESSAGE);
+					int option = JOptionPane.showConfirmDialog(null,"DESEJA REALMENTE DELETAR O GRUPO?","SERÁ QUE É ISSO MESMO?",JOptionPane.WARNING_MESSAGE);
 					if(option == 0)
 					{
-						Consultas.Deletar(user);
-						user = null;
+						Consultas.Deletar(group);
+						group = null;
 					
-						JOptionPane.showMessageDialog(null,"O USUÁRIO FOI DELETADO COM SUCESSO!!!","SUCESSO",JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(null,"O GRUPO FOI DELETADO COM SUCESSO!!!","SUCESSO",JOptionPane.INFORMATION_MESSAGE);
 						
 						remove(bt_salvar);
 						add(bt_editar);
 						repaint();
-						username.setText("");
-						email.setText("");
+						groupname.setText("");
 						description.setText("");
-						username.setEditable(false);
-						email.setEditable(false);
+						groupname.setEditable(false);
 						description.setEditable(false);
 						
-						Usuarios.tabela.RemoverLinha();
+						Grupos.tabela.RemoverLinha();
 					}
 				}
 			}
@@ -216,14 +195,12 @@ class Form extends JPanel
 	}
 	
 	//METODO CHAMADO PELA TABELA QUE PEENCHE OS CAMPOS DO FORMULARIO
-	public void SetarDados(Users user)
+	public void SetarDados(Groups group)
 	{
-		this.user = user;
-		this.username.setText(this.user.getUsername());
-		this.email.setText(this.user.getEmail());
-		this.description.setText(this.user.getDescription());
-		username.setEditable(false);
-		email.setEditable(false);
+		this.group = group;
+		this.groupname.setText(this.group.getGroupname());
+		this.description.setText(this.group.getDescription());
+		groupname.setEditable(false);
 		description.setEditable(false);
 		
 		this.remove(this.bt_salvar);

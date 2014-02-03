@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import br.edu.ifms.pykota.utilitarios.Icone;
+import br.edu.ifms.pykota.itens.grupos.Grupos;
 import br.edu.ifms.pykota.itens.usuarios.Usuarios;
 
 @SuppressWarnings("serial")
@@ -66,7 +67,9 @@ class Botao extends JLabel
 						
 					break;
 					case 3: 
-						
+						//DIALOG DO USUARIO
+						Grupos grupos = new Grupos();
+						grupos.Show();
 					break;
 					case 4: 
 						

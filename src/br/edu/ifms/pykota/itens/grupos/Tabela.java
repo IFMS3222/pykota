@@ -1,4 +1,4 @@
-package br.edu.ifms.pykota.itens.usuarios;
+package br.edu.ifms.pykota.itens.grupos;
 
 import java.awt.Color;
 import java.util.List;
@@ -14,27 +14,27 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import br.edu.ifms.pykota.controle.Consultas;
-import br.edu.ifms.pykota.entidades.Users;
+import br.edu.ifms.pykota.entidades.Groups;
 import br.edu.ifms.pykota.utilitarios.AntiInjection;
 
 @SuppressWarnings("serial")
-class UserCellRenderer extends DefaultTableCellRenderer
+class GroupCellRenderer extends DefaultTableCellRenderer
 {
-	public UserCellRenderer()
+	public GroupCellRenderer()
 	{
 		super();
 		this.setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
 	}
 
     public void setValue(Object value) {
-        setText((value == null) ? "" : ((Users) value).getUsername());
+        setText((value == null) ? "" : ((Groups) value).getGroupname());
     }
 }
 
 @SuppressWarnings("serial")
 public class Tabela extends JTable 
 {	
-	private UserCellRenderer userCellRenderer = new UserCellRenderer();
+	private GroupCellRenderer groupCellRenderer = new GroupCellRenderer();
 	
 	public Tabela(String[] nom_col,int[] lar_col)
 	{
@@ -68,7 +68,7 @@ public class Tabela extends JTable
 	}
 	
 	public TableCellRenderer getCellRenderer(int row, int column) {
-            return userCellRenderer;
+            return groupCellRenderer;
     }
 	
 	public void RemoverTudo()
@@ -99,11 +99,11 @@ public class Tabela extends JTable
 		
 		//LOOP COM OS DADOS DO BANCO
 		@SuppressWarnings("unchecked")
-		List<Users> users = Consultas.ListarComFiltro(Consultas.getNovoFiltro(Users.class).add(Restrictions.like("username", busca, MatchMode.ANYWHERE)).addOrder(Order.asc("username")));
+		List<Groups> groups = Consultas.ListarComFiltro(Consultas.getNovoFiltro(Groups.class).add(Restrictions.like("groupname", busca, MatchMode.ANYWHERE)).addOrder(Order.asc("groupname")));
 		
-		for (Users us : users)
+		for (Groups us : groups)
 		{
-			((DefaultTableModel)this.getModel()).addRow(new Users[]{us});
+			((DefaultTableModel)this.getModel()).addRow(new Groups[]{us});
 		}
 	}
 	
