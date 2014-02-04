@@ -1,9 +1,14 @@
 package br.edu.ifms.pykota.itens.grupos;
 
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -15,7 +20,9 @@ import javax.swing.JTextField;
 import br.edu.ifms.pykota.controle.Consultas;
 import br.edu.ifms.pykota.entidades.Groups;
 import br.edu.ifms.pykota.utilitarios.AntiInjection;
+import br.edu.ifms.pykota.utilitarios.BordaRedonda;
 import br.edu.ifms.pykota.utilitarios.Icone;
+import br.edu.ifms.pykota.utilitarios.Botao;;
 
 @SuppressWarnings("serial")
 class Form extends JPanel
@@ -33,15 +40,29 @@ class Form extends JPanel
 	private Font font = new Font("Arial",Font.PLAIN,13);
 	
 	public static Groups group;
+	private BufferedImage img;
 	
 	public Form()
 	{
+		try {
+		      img = ImageIO.read(getClass().getResource("/br/edu/ifms/pykota/img/fundo_ap.png"));
+		    } catch(IOException e) {
+		      e.printStackTrace();
+		    }
+		
 		this.setLayout(null);
 		this.setBounds(10,20,470,270);
 		
 		this.Labels();
 		this.Botoes();
 	} 
+	
+	@Override
+	  protected void paintComponent(Graphics g) {
+	    super.paintComponent(g);
+	    g.drawImage(img, 0, 0, getWidth(), getHeight(), this);
+	  }
+	
 	
 	public void Labels()
 	{	
@@ -51,7 +72,9 @@ class Form extends JPanel
 		lb_groupname.setFont(this.font_bd);
 		this.add(lb_groupname);
 		
-		this.groupname = new JTextField();
+		this.groupname = new BordaRedonda();
+		this.groupname.setOpaque(false);
+		this.groupname.setBorder(BorderFactory.createEmptyBorder(4, 8, 4, 8));
 		this.groupname.setBounds(100,50,200,25);
 		this.groupname.setFont(this.font);
 		this.groupname.setEditable(false);
@@ -82,11 +105,8 @@ class Form extends JPanel
 	public void Botoes()
 	{
 		//ADICIONA O BOTAO ADICIONAR
-		this.bt_add = new Botao("Novo","add_user.png",30);
-		this.bt_add.setBounds(340,45,120,40);
-		this.bt_add.setFont(this.font_bd);
-		this.bt_add.setHorizontalTextPosition(JButton.RIGHT);
-		this.bt_add.setVerticalTextPosition(JButton.CENTER);
+		this.bt_add = new Botao("Novo","f-add-group-icon.png",60);
+		this.bt_add.setBounds(340,25,100,80);
 		this.bt_add.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e) 
@@ -206,17 +226,5 @@ class Form extends JPanel
 		this.remove(this.bt_salvar);
 		this.add(this.bt_editar);
 		this.repaint();
-	}
-}
-
-
-@SuppressWarnings("serial")
-class Botao extends JButton
-{
-	public Botao(String texto,String URL_icon,int tam)
-	{
-		super(texto);
-		this.setIcon(new Icone(URL_icon,tam));
-		
 	}
 }

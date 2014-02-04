@@ -40,10 +40,9 @@ public class Tabela extends JTable
 	{
 		this.setModel(new DefaultTableModel(nom_col,0));
 		this.setBackground(Color.decode("#DFDFDF"));
-		this.setAutoCreateRowSorter(true);
 		this.setRowHeight(20);
 		this.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		this.setBackground(Color.decode("#DDDDDD"));
+		this.setBackground(Color.WHITE);
 		
 		this.Buscar("");
 		

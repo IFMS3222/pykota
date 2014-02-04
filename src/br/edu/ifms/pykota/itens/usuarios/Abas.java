@@ -3,9 +3,13 @@ package br.edu.ifms.pykota.itens.usuarios;
 import java.awt.Color;
 import java.util.List;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
@@ -14,11 +18,12 @@ import org.hibernate.criterion.Restrictions;
 import br.edu.ifms.pykota.controle.Consultas;
 import br.edu.ifms.pykota.entidades.Userpquota;
 import br.edu.ifms.pykota.entidades.Users;
+import br.edu.ifms.pykota.utilitarios.AntiInjection;
 import br.edu.ifms.pykota.utilitarios.Icone;
 
 @SuppressWarnings("serial")
 public class Abas extends JTabbedPane
-{
+{	
 	public Cotas cotas = new Cotas();
 	
 	public Abas()
@@ -31,30 +36,90 @@ public class Abas extends JTabbedPane
 
 
 @SuppressWarnings("serial")
-class Cotas extends JPanel
+class Cotas extends JScrollPane
 {	
+	String[] str = {"Impressora","Total Impresso","Páginas no Mês","Cota Restante","Cota Mensal"};
+	int[] lar = {90,90,90,90,90};
+	public TabelaCotas tabelascotas =  new TabelaCotas(str,lar);
 	
 	public Cotas()
 	{
-		this.setLayout(null);
+		this.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		this.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		this.setViewportView(this.tabelascotas);
 	}
 	
 	public void Buscar()
 	{
-		@SuppressWarnings("unchecked")
-		List<Userpquota> userpquotas = Consultas.ListarComFiltro(Consultas.getNovoFiltro(Userpquota.class).add(Restrictions.like("userid",Form.user.getId()+"", MatchMode.EXACT)));
-		//List<Users> users = Consultas.ListarComFiltro(Consultas.getNovoFiltro(Users.class).add(Restrictions.like("username", busca, MatchMode.ANYWHERE)).addOrder(Order.asc("username")));
+		this.tabelascotas.Buscar();
+	}
+}
+
+class TabelaCotas extends JTable
+{
+	public TabelaCotas(String[] nom_col,int[] lar_col)
+	{
+		this.setModel(new DefaultTableModel(nom_col,0));
+		this.setBackground(Color.decode("#DFDFDF"));
+		this.setRowHeight(20);
+		this.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		this.setBackground(Color.WHITE);
 		
+		DefaultTableCellRenderer centro = new DefaultTableCellRenderer();
+		centro.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		//GERA AS LARGURAS DAS CoLUNAS
 		int i = 0;
-		for (Userpquota userpquota : userpquotas)
+		while(true)
 		{
-			this.removeAll();
-			JLabel f = new JLabel(userpquota.getPrinters().getPrintername());
-			f.setBounds(0,23*i++,470,22);
-			f.setBackground(Color.decode("#CCC"));
-			this.add(f);
-			
-			this.repaint();
+			try
+			{
+				this.getColumnModel().getColumn(i).setPreferredWidth(lar_col[i]);
+				this.getColumnModel().getColumn(i).setCellRenderer(centro);
+			}
+			catch(Exception erro)
+			{
+				break;
+			}
+			i++;
 		}
 	}
+	
+	public void RemoverTudo()
+	{
+		while(true)
+		{
+			try
+			{
+				((DefaultTableModel)this.getModel()).removeRow(0);
+			}
+			catch(Exception cabô)
+			{
+				break;
+			}
+		}
+	}
+	
+	public void RemoverLinha()
+	{
+		((DefaultTableModel)this.getModel()).removeRow(this.getSelectedRow());
+	}
+	
+	public void Buscar()
+	{	
+		this.RemoverTudo();
+		
+		for (Userpquota us : Form.user.getUserpquotas())
+		{
+			String[] s = {us.getPrinters().getPrintername(),us.getLifepagecounter()+"",us.getPagecounter()+"",us.getSoftlimit()+"",us.getHardlimit()+""};
+			((DefaultTableModel)this.getModel()).addRow(s);
+		}
+	}
+	
+	public boolean isCellEditable(int Rows,int Colss)
+	{
+		return false;
+	}
+	
+	
 }

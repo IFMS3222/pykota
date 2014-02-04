@@ -1,9 +1,14 @@
 package br.edu.ifms.pykota.itens.usuarios;
 
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -15,6 +20,8 @@ import javax.swing.JTextField;
 import br.edu.ifms.pykota.controle.Consultas;
 import br.edu.ifms.pykota.entidades.Users;
 import br.edu.ifms.pykota.utilitarios.AntiInjection;
+import br.edu.ifms.pykota.utilitarios.BordaRedonda;
+import br.edu.ifms.pykota.utilitarios.Botao;
 import br.edu.ifms.pykota.utilitarios.Icone;
 
 @SuppressWarnings("serial")
@@ -28,21 +35,36 @@ class Form extends JPanel
 	private Botao bt_add;
 	private Botao bt_salvar;
 	private Botao bt_editar;
+	private Botao bt_cancelar;
 	private Botao bt_deletar;
 	
-	private Font font_bd = new Font("Arial",Font.PLAIN,15);
-	private Font font = new Font("Arial",Font.PLAIN,13);
+	private Font font_bd = new Font("Times New Roman",Font.PLAIN,15);
+	private Font font = new Font("Times New Roman",Font.PLAIN,13);
 	
 	public static Users user;
+	private BufferedImage img;
 	
 	public Form()
 	{
+		try {
+		      img = ImageIO.read(getClass().getResource("/br/edu/ifms/pykota/img/fundo_ap.png"));
+		    } catch(IOException e) {
+		      e.printStackTrace();
+		    }		
+		
+		
 		this.setLayout(null);
 		this.setBounds(10,20,470,270);
 		
 		this.Labels();
 		this.Botoes();
 	} 
+	
+	@Override
+	  protected void paintComponent(Graphics g) {
+	    super.paintComponent(g);
+	    g.drawImage(img, 0, 0, getWidth(), getHeight(), this);
+	  }
 	
 	public void Labels()
 	{	
@@ -52,7 +74,9 @@ class Form extends JPanel
 		lb_username.setFont(this.font_bd);
 		this.add(lb_username);
 		
-		this.username = new JTextField();
+		this.username = new BordaRedonda();
+		this.username.setOpaque(false);
+		this.username.setBorder(BorderFactory.createEmptyBorder(4, 8, 4, 8));
 		this.username.setBounds(100,40,200,25);
 		this.username.setFont(this.font);
 		username.setEditable(false);
@@ -65,7 +89,9 @@ class Form extends JPanel
 		lb_email.setFont(this.font_bd);
 		this.add(lb_email);
 		
-		this.email = new JTextField();
+		this.email = new BordaRedonda();
+		this.email.setOpaque(false);
+		this.email.setBorder(BorderFactory.createEmptyBorder(4, 8, 4, 8));
 		this.email.setBounds(100,80,200,25);
 		this.email.setFont(this.font);
 		email.setEditable(false);
@@ -96,11 +122,8 @@ class Form extends JPanel
 	public void Botoes()
 	{
 		//ADICIONA O BOTAO ADICIONAR
-		this.bt_add = new Botao("Novo","add_user.png",30);
-		this.bt_add.setBounds(340,45,120,40);
-		this.bt_add.setFont(this.font_bd);
-		this.bt_add.setHorizontalTextPosition(JButton.RIGHT);
-		this.bt_add.setVerticalTextPosition(JButton.CENTER);
+		this.bt_add = new Botao("Criar novo usuário","f-add-user-icon.png",60);
+		this.bt_add.setBounds(340,25,100,80);
 		this.bt_add.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e) 
@@ -124,11 +147,8 @@ class Form extends JPanel
 		
 		
 		//ADICIONA O BOTAO EDITAR
-		this.bt_editar = new Botao("Editar","edit_user.png",30);
-		this.bt_editar.setBounds(340,95,120,40);
-		this.bt_editar.setFont(this.font_bd);
-		this.bt_editar.setHorizontalTextPosition(JButton.RIGHT);
-		this.bt_editar.setVerticalTextPosition(JButton.CENTER);
+		this.bt_editar = new Botao("Editar usuário","f-edit-user-icon.png",60);
+		this.bt_editar.setBounds(340,95,100,80);
 		this.bt_editar.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e) 
@@ -138,8 +158,11 @@ class Form extends JPanel
 					username.setEditable(true);
 					email.setEditable(true);
 					description.setEditable(true);
+					username.requestFocus();
 					remove(bt_editar);
+					remove(bt_deletar);
 					add(bt_salvar);
+					add(bt_cancelar);
 					repaint();
 				}
 			}
@@ -148,11 +171,8 @@ class Form extends JPanel
 		
 		
 		//ADICIONA O BOTAO SALVAR
-		this.bt_salvar = new Botao("Salvar","save.png",30);
-		this.bt_salvar.setBounds(340,95,120,40);
-		this.bt_salvar.setFont(this.font_bd);
-		this.bt_salvar.setHorizontalTextPosition(JButton.RIGHT);
-		this.bt_salvar.setVerticalTextPosition(JButton.CENTER);
+		this.bt_salvar = new Botao("Salvar","f-save-icon.png",60);
+		this.bt_salvar.setBounds(340,95,100,80);
 		this.bt_salvar.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e) 
@@ -168,7 +188,9 @@ class Form extends JPanel
 					JOptionPane.showMessageDialog(null,"O USUÁRIO FOI ALTERADO COM SUCESSO!!!","SUCESSO",JOptionPane.INFORMATION_MESSAGE);
 					
 					remove(bt_salvar);
+					remove(bt_cancelar);
 					add(bt_editar);
+					add(bt_deletar);
 					repaint();
 					username.setEditable(false);
 					email.setEditable(false);
@@ -177,12 +199,30 @@ class Form extends JPanel
 			}
 		});
 		
+		//ADICIONA O BOTAO CANCELAR
+				this.bt_cancelar = new Botao("Cancelar","f-cancel-icon.png",60);
+				this.bt_cancelar.setBounds(340,165,100,80);
+				
+				this.bt_cancelar.addActionListener(new ActionListener()
+				{
+
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						remove(bt_salvar);
+						remove(bt_cancelar);
+						add(bt_editar);
+						add(bt_deletar);
+						repaint();
+						username.setEditable(false);
+						email.setEditable(false);
+						description.setEditable(false);
+										
+					}});
+
+		
 		//ADICIONA O BOTAO DELETAR
-		this.bt_deletar = new Botao("Deletar","delete_user.png",30);
-		this.bt_deletar.setBounds(340,145,120,40);
-		this.bt_deletar.setFont(this.font_bd);
-		this.bt_deletar.setHorizontalTextPosition(JButton.RIGHT);
-		this.bt_deletar.setVerticalTextPosition(JButton.CENTER);
+		this.bt_deletar = new Botao("Excluir Usuário","f-delete-user-icon.png",60);
+		this.bt_deletar.setBounds(340,165,100,80);
 		this.bt_deletar.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e) 
@@ -227,19 +267,9 @@ class Form extends JPanel
 		description.setEditable(false);
 		
 		this.remove(this.bt_salvar);
+		this.remove(this.bt_cancelar);
 		this.add(this.bt_editar);
+		this.add(this.bt_deletar);
 		this.repaint();
-	}
-}
-
-
-@SuppressWarnings("serial")
-class Botao extends JButton
-{
-	public Botao(String texto,String URL_icon,int tam)
-	{
-		super(texto);
-		this.setIcon(new Icone(URL_icon,tam));
-		
 	}
 }

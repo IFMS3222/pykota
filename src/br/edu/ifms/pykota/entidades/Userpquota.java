@@ -37,7 +37,7 @@ public class Userpquota  implements java.io.Serializable {
      private Date datelimit;
      private Integer maxjobsize;
      private Integer warncount;
-
+     
     public Userpquota() {
     }
 
@@ -154,10 +154,6 @@ public class Userpquota  implements java.io.Serializable {
     public void setWarncount(Integer warncount) {
         this.warncount = warncount;
     }
-
-
-
-
 }
 
 

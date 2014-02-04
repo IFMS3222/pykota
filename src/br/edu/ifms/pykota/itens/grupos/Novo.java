@@ -15,13 +15,16 @@ import javax.swing.JTextField;
 
 import br.edu.ifms.pykota.controle.Consultas;
 import br.edu.ifms.pykota.entidades.Groups;
-import br.edu.ifms.pykota.utilitarios.AntiInjection;
+import br.edu.ifms.pykota.utilitarios.Botao;
 
 @SuppressWarnings("serial")
 public class Novo extends JDialog
 {	
+	public static Novo novo;
+	
 	public Novo()
 	{
+		novo = this;
 		this.setSize(400,300);
 		this.setLocationRelativeTo(null);
 		this.setModal(true);
@@ -29,6 +32,7 @@ public class Novo extends JDialog
 		this.setTitle("Adicionar Grupo");
 		
 		this.add(new Painel());
+		
 	}
 }
 
@@ -99,11 +103,15 @@ class Painel extends JPanel
 					groups.setGroupname(groupname.getText());
 					groups.setDescription(description.getText());
 					
-					Consultas.Inserir(groups);
+					if(Consultas.Inserir(groups))
+					{
+						JOptionPane.showMessageDialog(null,"GRUPO ADICIONADO COM SUCESSO!!!","ADICIONADO COM SUCESSO",JOptionPane.INFORMATION_MESSAGE);
+						Grupos.tabela.Buscar("");
+					}
+					else
+						JOptionPane.showMessageDialog(null,"ERRO AO INSERIR GRUPO!!!","ERRO!!!",JOptionPane.ERROR_MESSAGE);
 					
-					JOptionPane.showMessageDialog(null,"GRUPO ADICIONADO COM SUCESSO!!!","ADICIONADO COM SUCESSO",JOptionPane.INFORMATION_MESSAGE);
-					
-					setVisible(false);
+					Novo.novo.setVisible(false);
 				}
 			}
 		});

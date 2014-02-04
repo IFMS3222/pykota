@@ -3,6 +3,7 @@ package br.edu.ifms.pykota.controle;
 import java.io.Serializable;
 import java.util.List;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Criteria;
 
@@ -57,12 +58,20 @@ public class Consultas {
 		session.getTransaction().commit();
 	}
 
-	public static void Inserir(Object object) {
+	public static boolean Inserir(Object object) {
 		getSession();
-
-		session.beginTransaction();
-		session.save(object);
-		session.getTransaction().commit();
+		
+		try
+		{
+			session.beginTransaction();
+			session.save(object);
+			session.getTransaction().commit();
+			return true;
+		}
+		catch(HibernateException he)
+		{
+			return false;
+		}
 	}
 
 	public static List Listar(Class classe) {

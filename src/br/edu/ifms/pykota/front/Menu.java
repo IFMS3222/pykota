@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import br.edu.ifms.pykota.utilitarios.Icone;
+import br.edu.ifms.pykota.itens.cotaUsuarios.CotaUsuarios;
 import br.edu.ifms.pykota.itens.grupos.Grupos;
 import br.edu.ifms.pykota.itens.usuarios.Usuarios;
 
@@ -64,9 +65,11 @@ class Botao extends JLabel
 						usuarios.Show();
 					break;  
 					case 2: 
-						
+						//DIALOG COTA USUARIOS
+						CotaUsuarios cotaUsuarios = new CotaUsuarios();
+						cotaUsuarios.Show();
 					break;
-					case 3: 
+					case 3:
 						//DIALOG DO USUARIO
 						Grupos grupos = new Grupos();
 						grupos.Show();
