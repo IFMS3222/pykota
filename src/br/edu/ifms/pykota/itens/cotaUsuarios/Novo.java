@@ -11,18 +11,14 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
 import br.edu.ifms.pykota.controle.Consultas;
-import br.edu.ifms.pykota.entidades.Groups;
 import br.edu.ifms.pykota.entidades.Printers;
 import br.edu.ifms.pykota.entidades.Userpquota;
 import br.edu.ifms.pykota.entidades.Users;
 import br.edu.ifms.pykota.utilitarios.BordaRedonda;
 import br.edu.ifms.pykota.utilitarios.Botao;
+import br.edu.ifms.pykota.utilitarios.FundoPanel;
 
 @SuppressWarnings("serial")
 public class Novo extends JDialog
@@ -43,14 +39,13 @@ public class Novo extends JDialog
 }
 
 @SuppressWarnings("serial")
-class Painel extends JPanel
+class Painel extends FundoPanel
 {
 private Userpquota userpquota;
 	
 	private JComboBox tf_user;
 	private JComboBox tf_printer;
 	private BordaRedonda tf_cota;
-	
 	
 	private Font font = new Font("Times New Roman",Font.PLAIN,15);
 	private Font font_bd = new Font("Times New Roman",Font.BOLD,15);
@@ -76,8 +71,6 @@ private Userpquota userpquota;
 		
 		this.tf_user.setBounds(120,20,200,25);
 		this.tf_user.setFont(font);
-		this.tf_user.setBorder(BorderFactory.createEmptyBorder(4, 8, 4, 8));
-		this.tf_user.setOpaque(false);
 		this.add(this.tf_user);
 		
 		
@@ -87,9 +80,7 @@ private Userpquota userpquota;
 		this.add(lb_printer);
 		
 		this.tf_printer.setBounds(120,60,200,25);
-		this.tf_printer.setOpaque(false);
 		this.tf_printer.setFont(font);
-		this.tf_printer.setBorder(BorderFactory.createEmptyBorder(4, 8, 4, 8));
 		this.add(this.tf_printer);
 		
 		
