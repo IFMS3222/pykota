@@ -15,6 +15,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import br.edu.ifms.pykota.entidades.Users;
+import br.edu.ifms.pykota.utilitarios.BordaRedonda;
 import br.edu.ifms.pykota.utilitarios.Dialog;
 import br.edu.ifms.pykota.utilitarios.FundoPanel;
 
@@ -35,6 +36,7 @@ public class Usuarios extends Dialog
 		super(Dialog.USUARIOS);
 		this.setLayout(null);
 		this.Componentes();
+		this.Eventos();
 	}
 	
 	public void Componentes()
@@ -42,41 +44,13 @@ public class Usuarios extends Dialog
 		this.leftPanel = new FundoPanel();//PAINEL ESQUERDO
 		this.rightPanel = new FundoPanel();//PAINEL DIREITO
 		
-		this.busca = new JTextField();//CAIXA DE TEXTO DO INSTANT 
+		this.busca = new BordaRedonda();//CAIXA DE TEXTO DO INSTANT 
 		this.scroll = new JScrollPane();//SCROLL
 		this.tabela = new Tabela(new String[]{"Usuários"},new int[]{268}); //TABELA COM OS USUARIOS
 		this.form = new Form(); //FORMULARIO
 		this.abas = new Abas(); //BARRAS
 		
 		this.busca.setBounds(10,20,270,25);
-		this.busca.addKeyListener(new KeyListener()
-		{
-			public void keyPressed(KeyEvent arg0){}
-			public void keyReleased(KeyEvent e) 
-			{	
-				if(e.getKeyChar() != ' ')
-				{
-					tabela.Buscar(busca.getText());
-				}
-			}
-			public void keyTyped(KeyEvent arg0){}
-		});
-		
-		
-		this.tabela.addMouseListener(new MouseListener()
-		{
-			public void mouseClicked(MouseEvent c)
-			{
-				Users user = (Users) ((DefaultTableModel)tabela.getModel()).getValueAt(tabela.getSelectedRow(), 0);
-				form.SetarDados(user);
-				abas.cotas.Buscar();
-			}
-			public void mouseEntered(MouseEvent c){}
-			public void mouseExited(MouseEvent c){}
-			public void mousePressed(MouseEvent c){}
-			public void mouseReleased(MouseEvent c){}
-		});
-		
 		
 		this.scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		this.scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -102,5 +76,35 @@ public class Usuarios extends Dialog
 		this.rightPanel.add(this.form);
 		this.rightPanel.add(this.abas);
 		this.add(this.rightPanel);
-	}	
+	}
+	
+	public void Eventos()
+	{
+		this.busca.addKeyListener(new KeyListener()
+		{
+			public void keyPressed(KeyEvent arg0){}
+			public void keyReleased(KeyEvent e) 
+			{	
+				if(e.getKeyChar() != ' ')
+				{
+					tabela.Buscar(busca.getText());
+				}
+			}
+			public void keyTyped(KeyEvent arg0){}
+		});
+		
+		this.tabela.addMouseListener(new MouseListener()
+		{
+			public void mouseClicked(MouseEvent c)
+			{
+				Users user = (Users) ((DefaultTableModel)tabela.getModel()).getValueAt(tabela.getSelectedRow(), 0);
+				form.SetarDados(user);
+				abas.cotas.Buscar();
+			}
+			public void mouseEntered(MouseEvent c){}
+			public void mouseExited(MouseEvent c){}
+			public void mousePressed(MouseEvent c){}
+			public void mouseReleased(MouseEvent c){}
+		});
+	}
 }

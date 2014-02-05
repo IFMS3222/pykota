@@ -185,7 +185,7 @@ public class Printers  implements java.io.Serializable {
         this.userpquotas = userpquotas;
     }
 
-
+    public String toString(){return this.printername;} 
 
 
 }

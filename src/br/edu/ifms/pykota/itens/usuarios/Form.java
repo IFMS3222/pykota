@@ -1,18 +1,10 @@
 package br.edu.ifms.pykota.itens.usuarios;
 
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -22,10 +14,10 @@ import br.edu.ifms.pykota.entidades.Users;
 import br.edu.ifms.pykota.utilitarios.AntiInjection;
 import br.edu.ifms.pykota.utilitarios.BordaRedonda;
 import br.edu.ifms.pykota.utilitarios.Botao;
-import br.edu.ifms.pykota.utilitarios.Icone;
+import br.edu.ifms.pykota.utilitarios.FundoPanel;
 
 @SuppressWarnings("serial")
-class Form extends JPanel
+class Form extends FundoPanel
 {
 	
 	private JTextField username;
@@ -42,17 +34,9 @@ class Form extends JPanel
 	private Font font = new Font("Times New Roman",Font.PLAIN,13);
 	
 	public static Users user;
-	private BufferedImage img;
 	
 	public Form()
 	{
-		try {
-		      img = ImageIO.read(getClass().getResource("/br/edu/ifms/pykota/img/fundo_ap.png"));
-		    } catch(IOException e) {
-		      e.printStackTrace();
-		    }		
-		
-		
 		this.setLayout(null);
 		this.setBounds(10,20,470,270);
 		
@@ -60,11 +44,6 @@ class Form extends JPanel
 		this.Botoes();
 	} 
 	
-	@Override
-	  protected void paintComponent(Graphics g) {
-	    super.paintComponent(g);
-	    g.drawImage(img, 0, 0, getWidth(), getHeight(), this);
-	  }
 	
 	public void Labels()
 	{	
@@ -75,11 +54,9 @@ class Form extends JPanel
 		this.add(lb_username);
 		
 		this.username = new BordaRedonda();
-		this.username.setOpaque(false);
-		this.username.setBorder(BorderFactory.createEmptyBorder(4, 8, 4, 8));
 		this.username.setBounds(100,40,200,25);
 		this.username.setFont(this.font);
-		username.setEditable(false);
+		this.username.setEditable(false);
 		this.add(this.username);
 		
 		
@@ -90,8 +67,6 @@ class Form extends JPanel
 		this.add(lb_email);
 		
 		this.email = new BordaRedonda();
-		this.email.setOpaque(false);
-		this.email.setBorder(BorderFactory.createEmptyBorder(4, 8, 4, 8));
 		this.email.setBounds(100,80,200,25);
 		this.email.setFont(this.font);
 		email.setEditable(false);
@@ -159,6 +134,7 @@ class Form extends JPanel
 					email.setEditable(true);
 					description.setEditable(true);
 					username.requestFocus();
+					remove(bt_add);
 					remove(bt_editar);
 					remove(bt_deletar);
 					add(bt_salvar);
@@ -189,6 +165,7 @@ class Form extends JPanel
 					
 					remove(bt_salvar);
 					remove(bt_cancelar);
+					add(bt_add);
 					add(bt_editar);
 					add(bt_deletar);
 					repaint();
@@ -210,6 +187,7 @@ class Form extends JPanel
 					public void actionPerformed(ActionEvent arg0) {
 						remove(bt_salvar);
 						remove(bt_cancelar);
+						add(bt_add);
 						add(bt_editar);
 						add(bt_deletar);
 						repaint();

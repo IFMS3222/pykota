@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Criteria;
 
@@ -92,5 +93,11 @@ public class Consultas {
 		session.getTransaction().commit();
 
 		return lista;
+	}
+	
+	public static Query CriarConsultaHQL(String hql)
+	{
+		getSession();
+		return session.createQuery(hql);
 	}
 }

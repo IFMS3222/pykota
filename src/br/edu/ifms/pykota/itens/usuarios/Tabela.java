@@ -43,6 +43,7 @@ public class Tabela extends JTable
 		this.setRowHeight(20);
 		this.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		this.setBackground(Color.WHITE);
+		this.getTableHeader().setReorderingAllowed(false);
 		
 		this.Buscar("");
 		

@@ -174,7 +174,7 @@ public class Users implements java.io.Serializable {
         this.groupses = groupses;
     }
 
-
+    public String toString(){return this.username;} 
 
 
 }

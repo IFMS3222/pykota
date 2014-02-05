@@ -15,7 +15,9 @@ import javax.swing.JTextField;
 
 import br.edu.ifms.pykota.controle.Consultas;
 import br.edu.ifms.pykota.entidades.Groups;
+import br.edu.ifms.pykota.utilitarios.BordaRedonda;
 import br.edu.ifms.pykota.utilitarios.Botao;
+import br.edu.ifms.pykota.utilitarios.FundoPanel;
 
 @SuppressWarnings("serial")
 public class Novo extends JDialog
@@ -37,7 +39,7 @@ public class Novo extends JDialog
 }
 
 @SuppressWarnings("serial")
-class Painel extends JPanel
+class Painel extends FundoPanel
 {
 	private JTextField groupname;
 	private JTextArea description; 
@@ -62,7 +64,7 @@ class Painel extends JPanel
 		lb_groupname.setFont(this.font_bd);
 		this.add(lb_groupname);
 		
-		this.groupname = new JTextField();
+		this.groupname = new BordaRedonda();
 		this.groupname.setBounds(100,50,200,25);
 		this.groupname.setFont(this.font);
 		this.add(this.groupname);
@@ -87,7 +89,7 @@ class Painel extends JPanel
 		this.add(scroll);
 		
 		//ADICIONA O BOTAO SALVAR
-		Botao salvar = new Botao("Salvar","save.png",22);
+		Botao salvar = new Botao("Salvar","f-save-icon.png",25);
 		salvar.setBounds(280,225,100,30);
 		salvar.setFont(this.font);
 		salvar.setHorizontalTextPosition(JButton.RIGHT);
@@ -112,6 +114,9 @@ class Painel extends JPanel
 						JOptionPane.showMessageDialog(null,"ERRO AO INSERIR GRUPO!!!","ERRO!!!",JOptionPane.ERROR_MESSAGE);
 					
 					Novo.novo.setVisible(false);
+				}else
+				{
+					JOptionPane.showMessageDialog(null, "Favor preencher todos os campos","ERRO!!!",JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});

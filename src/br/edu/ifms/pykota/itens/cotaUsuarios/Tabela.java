@@ -9,13 +9,8 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
-import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
-
 import br.edu.ifms.pykota.controle.Consultas;
 import br.edu.ifms.pykota.entidades.Userpquota;
-import br.edu.ifms.pykota.entidades.Users;
 import br.edu.ifms.pykota.utilitarios.AntiInjection;
 
 @SuppressWarnings("serial")
@@ -51,6 +46,7 @@ public class Tabela extends JTable
 		this.setRowHeight(20);
 		this.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		this.setBackground(Color.WHITE);
+		this.getTableHeader().setReorderingAllowed(false);
 		
 		this.Buscar("");
 		
@@ -75,8 +71,8 @@ public class Tabela extends JTable
 	}
 	
 	public TableCellRenderer getCellRenderer(int row, int column) {
-            return userCellRenderer;
-    }
+		return userCellRenderer;
+	}
 	
 	public void RemoverTudo()
 	{
@@ -106,8 +102,8 @@ public class Tabela extends JTable
 		
 		//LOOP COM OS DADOS DO BANCO
 		@SuppressWarnings("unchecked")
-		List<Userpquota> userpquota = Consultas.ListarComFiltro(Consultas.getNovoFiltro(Userpquota.class));
-			
+		List<Userpquota> userpquota = Consultas.CriarConsultaHQL("select uq from Userpquota as uq where uq.users.username like '%"+busca+"%' or uq.printers.printername like '%"+busca+"%'").list();
+		
 		for (Userpquota uq : userpquota)
 		{
 			((DefaultTableModel)this.getModel()).addRow(new Object[]{uq,uq.getPrinters().getPrintername(),uq.getLifepagecounter()+"",uq.getPagecounter()+"",uq.getSoftlimit()+"",uq.getHardlimit()+""});

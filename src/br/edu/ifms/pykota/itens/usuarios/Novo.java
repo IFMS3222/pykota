@@ -65,8 +65,6 @@ class Painel extends FundoPanel
 		this.add(lb_username);
 		
 		this.username = new BordaRedonda();
-		this.username.setOpaque(false);
-		this.username.setBorder(BorderFactory.createEmptyBorder(4, 8, 4, 8));
 		this.username.setBounds(100,40,200,25);
 		this.username.setFont(this.font);
 		this.add(this.username);
@@ -79,8 +77,6 @@ class Painel extends FundoPanel
 		this.add(lb_email);
 		
 		this.email = new BordaRedonda();
-		this.email.setOpaque(false);
-		this.email.setBorder(BorderFactory.createEmptyBorder(4, 8, 4, 8));
 		this.email.setBounds(100,80,200,25);
 		this.email.setFont(this.font);
 		this.add(this.email);
@@ -105,8 +101,7 @@ class Painel extends FundoPanel
 		this.add(scroll);
 		
 		//ADICIONA O BOTAO SALVAR
-		Botao salvar = new Botao("Salvar","save.png",25);
-		//salvar.setToolTipText("Salvar");
+		Botao salvar = new Botao("Salvar","f-save-icon.png",25);
 		salvar.setBounds(280,225,40,40);
 		salvar.addActionListener(new ActionListener()
 		{

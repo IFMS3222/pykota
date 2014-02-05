@@ -87,6 +87,6 @@ class Centro extends JPanel
 	protected void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
-		g.drawImage(new ImageIcon(getClass().getResource("../img/fundo.png")).getImage(),0,0,this.getWidth(),this.getHeight(),null);
+		g.drawImage(new ImageIcon(getClass().getResource("../img/url.jpg")).getImage(),0,0,this.getWidth(),this.getHeight(),null);
 	}
 }

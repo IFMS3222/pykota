@@ -1,8 +1,6 @@
 package br.edu.ifms.pykota.itens.usuarios;
 
 import java.awt.Color;
-import java.util.List;
-
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -10,15 +8,7 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-
-import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
-
-import br.edu.ifms.pykota.controle.Consultas;
 import br.edu.ifms.pykota.entidades.Userpquota;
-import br.edu.ifms.pykota.entidades.Users;
-import br.edu.ifms.pykota.utilitarios.AntiInjection;
 import br.edu.ifms.pykota.utilitarios.Icone;
 
 @SuppressWarnings("serial")
@@ -57,6 +47,11 @@ class Cotas extends JScrollPane
 
 class TabelaCotas extends JTable
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8168682852479827678L;
+
 	public TabelaCotas(String[] nom_col,int[] lar_col)
 	{
 		this.setModel(new DefaultTableModel(nom_col,0));

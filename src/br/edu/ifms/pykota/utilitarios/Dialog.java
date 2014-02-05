@@ -1,5 +1,11 @@
 package br.edu.ifms.pykota.utilitarios;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 import javax.swing.JDialog;
 
 @SuppressWarnings("serial")
@@ -9,6 +15,8 @@ public class Dialog extends JDialog
 	public static final int COTA_USUARIOS = 2;
 	public static final int GRUPOS = 3;
 	public static final int COTA_GRUPOS = 4;
+	
+	private BufferedImage img;
 	
 	public Dialog(int pos)
 	{
@@ -41,5 +49,8 @@ public class Dialog extends JDialog
 	public void Show()
 	{
 		this.setVisible(true);
+
 	}
+
+	
 } 
